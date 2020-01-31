@@ -20,6 +20,15 @@ export default class Paddle {
       }
     });
   }
+  getPaddlePosition() {
+    const position = {
+      top: this.y,
+      left: this.x,
+      bottom: this.y + this.height,
+      right: this.x + this.width
+    };
+    return position;
+  }
   //moves paddle up
   moveUp() {
     console.log('up was pressed');
