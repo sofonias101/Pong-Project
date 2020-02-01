@@ -20,6 +20,18 @@ export default class Paddle {
       }
     });
   }
+  //setSpeed
+
+
+  getScore() {
+    return this.score;
+  }
+
+  increaseScore() {
+    this.score = this.score + 1;
+  }
+
+
   getPaddlePosition() {
     const position = {
       top: this.y,
@@ -45,8 +57,8 @@ export default class Paddle {
   //paddles
   render(svg) {
     const paddleSvg = document.createElementNS(SVG_NS, 'rect');
-    paddleSvg.setAttributeNS(null, "x", this.x, 0);
-    paddleSvg.setAttributeNS(null, "y", this.y, 0);
+    paddleSvg.setAttributeNS(null, "x", this.x);
+    paddleSvg.setAttributeNS(null, "y", this.y);
     paddleSvg.setAttributeNS(null, "width", this.width);
     paddleSvg.setAttributeNS(null, "height", this.height);
     paddleSvg.setAttributeNS(null, "fill", "white");

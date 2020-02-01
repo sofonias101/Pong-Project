@@ -1,4 +1,5 @@
 import { SVG_NS } from '../settings'
+import pingSound from "../../public/sounds/pong-01.wav";
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -8,6 +9,7 @@ export default class Ball {
     // this.x = this.boardWidth / 2;
     // this.y = this.boardHeight / 2;
     this.direction = 1;
+    this.ping = new Audio(pingSound);
     this.reset();
 
   }
@@ -23,12 +25,18 @@ export default class Ball {
     this.vx = (6 - Math.abs(this.vy)) * this.direction;
   }
 
-  wallCollusion() {
-    //did
+  wallCollusion(paddle1, paddle2) {
+
     if ((this.y + this.radius >= this.boardHeight) || (this.y - this.radius <= 0)) {
       this.vy = this.vy * -1;
     }
-    if ((this.x - this.radius >= this.boardWidth) || (this.x + this.radius <= 0)) {
+    if (this.x - this.radius >= this.boardWidth) {
+      paddle1.increaseScore();
+      this.direction = -1;
+      this.reset();
+    } else if (this.x + this.radius <= 0) {
+      paddle2.increaseScore();
+      this.direction = 1;
       this.reset();
     }
 
@@ -42,6 +50,7 @@ export default class Ball {
       const belowTop = ((this.y + this.radius) >= position.top);
       const aboveBottom = ((this.y - this.radius) <= position.bottom);
       if (hitRight && belowTop && aboveBottom) {
+        this.ping.play();
         this.vx = this.vx * -1;
       }
     } else {
@@ -50,6 +59,7 @@ export default class Ball {
       const belowTop = ((this.y - this.radius) >= position.top);
       const aboveBottom = ((this.y + this.radius) <= position.bottom);
       if (hitLeft && belowTop && aboveBottom) {
+        this.ping.play();
         this.vx = this.vx * -1;
       }
     }
@@ -71,7 +81,7 @@ export default class Ball {
     ballSvg.setAttributeNS(null, "fill", "white");
     svg.appendChild(ballSvg);
     this.ballMove();
-    this.wallCollusion();
+    this.wallCollusion(paddle1, paddle2);
     this.paddleCollusion(paddle1, paddle2);
 
 

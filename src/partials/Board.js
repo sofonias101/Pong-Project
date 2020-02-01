@@ -12,7 +12,7 @@ export default class Board {
     boardSvg.setAttributeNS(null, "y", 0);
     boardSvg.setAttributeNS(null, "width", this.width);
     boardSvg.setAttributeNS(null, "height", this.height);
-    boardSvg.setAttributeNS(null, "fill", "#353535");
+    boardSvg.setAttributeNS(null, "fill", "orange");
     svg.appendChild(boardSvg);
 
     //line
