@@ -12,6 +12,7 @@ export default class Score {
     textSvg.setAttributeNS(null, "font-family", "'Silkscreen Web', 'monotype'");
     textSvg.setAttributeNS(null, "font-size", this.size);
     textSvg.setAttributeNS(null, "fill", "white");
+    textSvg.setAttributeNS(null, "stroke-linecap", "round");
     textSvg.textContent = score;
     svg.appendChild(textSvg);
 

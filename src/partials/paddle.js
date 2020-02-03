@@ -20,7 +20,9 @@ export default class Paddle {
       }
     });
   }
-  //setSpeed
+  resetScore() {
+    this.score = 0;
+  }
 
 
   getScore() {

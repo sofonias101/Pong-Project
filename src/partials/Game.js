@@ -3,7 +3,7 @@ import Board from './Board';
 import Paddle from './paddle';
 import Ball from './ball';
 import Score from './score';
-
+import showWinner from './showWinner'
 
 export default class Game {
   constructor(element, width, height) {
@@ -18,17 +18,37 @@ export default class Game {
     this.ball = new Ball(8, this.width, this.height)
     this.score1 = new Score(this.width / 2 - 50, 30, 30);
     this.score2 = new Score(this.width / 2 + 25, 30, 30);
+    this.gameWon = false;
+    this.showWinner = new showWinner(this.width / 2, this.height / 2, 40);
+
     // othercode
     document.addEventListener("keydown", event => {
       if (event.key === " ") {
         this.paused = !this.paused;
       }
+
+      // Event Listener For goal count and "winner"
+
+
     });
 
-
-    //(boardHeight, width, height, x, y)
+  }
+  gameWin(paddle1Score, paddle2Score) {
+    if (paddle1Score === 5) {
+      console.log('paddle1 won');
+      this.gameWon = true;
+      return 'Paddle1 won';
+    } else if (paddle2Score === 5) {
+      console.log('paddle2 won');
+      this.gameWon = true;
+      return 'Paddle2 won';
+    }
 
   }
+
+  //(boardHeight, width, height, x, y)
+
+
 
   render() {
     // More code goes here....
@@ -46,6 +66,20 @@ export default class Game {
       this.ball.render(svg, this.paddle1, this.paddle2);
       this.score1.render(svg, this.paddle1.getScore());
       this.score2.render(svg, this.paddle2.getScore());
+
+
+      const winningPlayer = this.gameWin(
+        this.paddle1.getScore(),
+        this.paddle2.getScore()
+      );
+      if (this.gameWon === true) {
+        this.showWinner.render(svg, `${winningPlayer}!`);
+        this.paused = true;
+        this.paddle1.resetScore();
+        this.paddle2.resetScore();
+        this.gameWon = false;
+      }
+
     }
   }
 }
